@@ -1,0 +1,682 @@
+/* =========================================================
+   style.css - LabCare
+   Stage 2: layout and design system
+   Stage 6: login / sign-up screen (section 13)
+   Stage 7: forms, details, comments, history, reports (section 14)
+   ========================================================= */
+
+
+/* ---------- 1. COLOUR AND SIZE VARIABLES ---------- */
+/* Defined once here, used everywhere with var(--name) */
+:root {
+  --primary: #2563eb;
+  --primary-dark: #1d4ed8;
+  --sidebar-bg: #0f172a;
+  --sidebar-text: #cbd5e1;
+  --page-bg: #f4f6fb;
+  --card-bg: #ffffff;
+  --text: #1f2937;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+  --radius: 10px;
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+
+/* ---------- 2. BASIC RESET ---------- */
+/* Make width include padding and border (easier sizing) */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background-color: var(--page-bg);
+  color: var(--text);
+}
+
+h1, h3, p {
+  margin: 0;
+}
+
+
+/* ---------- 3. MAIN LAYOUT: sidebar + main side by side ---------- */
+.app {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 240px;
+  flex-shrink: 0;
+  background-color: var(--sidebar-bg);
+  color: var(--sidebar-text);
+  padding: 24px 16px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+.main {
+  flex: 1;
+  min-width: 0;
+  padding: 24px 32px;
+}
+
+
+/* ---------- 4. SIDEBAR CONTENT ---------- */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 32px;
+  padding: 0 8px;
+}
+
+.logo-icon {
+  font-size: 28px;
+}
+
+.logo-text {
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.logo-subtext {
+  font-size: 12px;
+  color: var(--sidebar-text);
+}
+
+.nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Remove default button look, then style as a menu item */
+.nav-link {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  color: var(--sidebar-text);
+  font-family: inherit;
+  font-size: 15px;
+  padding: 12px 14px;
+  margin-bottom: 4px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.nav-link.active {
+  background-color: var(--primary);
+  color: #ffffff;
+}
+
+
+/* ---------- 5. TOP BAR ---------- */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.topbar-title {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.user-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: right;
+}
+
+.user-name {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.role-badge {
+  font-size: 12px;
+  color: var(--primary);
+}
+
+
+/* ---------- 6. PAGES AND PAGE HEADER ---------- */
+/* Hide every section... */
+.page {
+  display: none;
+}
+
+/* ...except the one that has the "active" class (set by script.js) */
+.page.active {
+  display: block;
+}
+
+.page-header {
+  margin-bottom: 20px;
+}
+
+.page-header h1 {
+  font-size: 26px;
+  margin-bottom: 4px;
+}
+
+.page-header p {
+  color: var(--muted);
+}
+
+
+/* ---------- 7. CARDS ---------- */
+.card {
+  background-color: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.card-title {
+  font-size: 17px;
+  margin-bottom: 16px;
+}
+
+
+/* ---------- 8. STATISTICS CARDS ---------- */
+/* Grid: as many columns as fit, each at least 170px wide */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  background-color: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 18px 20px;
+  border-left: 5px solid var(--primary);
+}
+
+.stat-label {
+  color: var(--muted);
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+
+.stat-number {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+/* Coloured left border for each card */
+.border-total    { border-left-color: #2563eb; }
+.border-open     { border-left-color: #64748b; }
+.border-progress { border-left-color: #f59e0b; }
+.border-resolved { border-left-color: #14b8a6; }
+.border-closed   { border-left-color: #22c55e; }
+.border-assigned { border-left-color: #8b5cf6; }
+.border-high     { border-left-color: #ef4444; }
+
+
+/* ---------- 9. TABLES ---------- */
+/* Lets wide tables scroll sideways on small screens */
+.table-wrapper {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+th {
+  text-align: left;
+  color: var(--muted);
+  font-size: 12px;
+  text-transform: uppercase;
+  padding: 10px 12px;
+  border-bottom: 2px solid var(--border);
+}
+
+td {
+  padding: 12px;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+tbody tr:hover {
+  background-color: #f9fafb;
+}
+
+
+/* ---------- 10. BADGES (status and priority labels) ---------- */
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Priority colours */
+.badge-low    { background-color: #dcfce7; color: #166534; }
+.badge-medium { background-color: #fef3c7; color: #92400e; }
+.badge-high   { background-color: #fee2e2; color: #991b1b; }
+
+/* Status colours */
+.badge-open     { background-color: #e2e8f0; color: #334155; }
+.badge-assigned { background-color: #ede9fe; color: #5b21b6; }
+.badge-progress { background-color: #fef3c7; color: #92400e; }
+.badge-resolved { background-color: #ccfbf1; color: #115e59; }
+.badge-closed   { background-color: #dcfce7; color: #166534; }
+
+
+/* ---------- 11. BUTTONS ---------- */
+.btn {
+  font-family: inherit;
+  font-size: 14px;
+  padding: 9px 16px;
+  border: none;
+  border-radius: 8px;
+  background-color: var(--primary);
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: var(--primary-dark);
+}
+
+.btn-light {
+  background-color: #ffffff;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.btn-light:hover {
+  background-color: #f3f4f6;
+}
+
+
+/* ---------- 12. RESPONSIVE: tablets and phones ---------- */
+/* These rules apply only when the screen is 768px wide or less */
+@media (max-width: 768px) {
+  .app {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: static;
+    padding: 16px;
+  }
+
+  .logo {
+    margin-bottom: 12px;
+  }
+
+  /* Menu becomes one horizontal row you can swipe */
+  .nav-list {
+    display: flex;
+    overflow-x: auto;
+    gap: 6px;
+  }
+
+  .nav-link {
+    white-space: nowrap;
+    margin-bottom: 0;
+  }
+
+  .main {
+    padding: 16px;
+  }
+
+  /* Two statistics cards per row on phones */
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .stat-number {
+    font-size: 24px;
+  }
+
+  .topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .user-box {
+    text-align: left;
+  }
+}
+
+
+/* ---------- 13. LOGIN / SIGN-UP SCREEN (Stage 6) ---------- */
+
+/* Make the HTML "hidden" attribute always win,
+   even over rules like .app { display: flex; } */
+[hidden] {
+  display: none !important;
+}
+
+/* Full-screen dark background, card in the centre */
+.auth-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background-color: var(--sidebar-bg);
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+  background-color: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  padding: 28px;
+}
+
+.auth-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.auth-title {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.auth-subtitle {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.auth-loading {
+  color: var(--muted);
+  text-align: center;
+  padding: 16px 0;
+}
+
+/* Log in / Sign up tabs */
+.auth-tabs {
+  display: flex;
+  gap: 4px;
+  background-color: #f3f4f6;
+  padding: 4px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.auth-tab {
+  flex: 1;
+  border: none;
+  background: none;
+  padding: 8px;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.auth-tab.active {
+  background-color: var(--card-bg);
+  color: var(--text);
+  font-weight: 600;
+  box-shadow: var(--shadow);
+}
+
+/* Form fields stacked vertically */
+.auth-form,
+.app-form {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.auth-form label,
+.app-form label {
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+.auth-form input,
+.app-form input,
+.app-form select,
+.app-form textarea {
+  font-family: inherit;
+  font-size: 14px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.auth-form input:focus,
+.app-form input:focus,
+.app-form select:focus,
+.app-form textarea:focus {
+  outline: 2px solid var(--primary);
+  border-color: transparent;
+}
+
+.btn-full {
+  width: 100%;
+  margin-top: 16px;
+  padding: 11px;
+}
+
+/* Buttons look faded while waiting for Supabase */
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.auth-note {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 10px;
+}
+
+/* Message box: red for errors, blue for information, green for success */
+.auth-message,
+.message {
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  margin-bottom: 12px;
+}
+
+.auth-message.error,   .message.error   { background-color: #fee2e2; color: #991b1b; }
+.auth-message.info,    .message.info    { background-color: #dbeafe; color: #1e40af; }
+.auth-message.success, .message.success { background-color: #dcfce7; color: #166534; }
+
+
+/* ---------- 14. APP PAGES (Stage 7) ---------- */
+
+.muted { color: var(--muted); }
+.small { font-size: 13px; margin-bottom: 10px; }
+
+/* Report Issue form: not too wide on big screens */
+.form-card { max-width: 560px; }
+.app-form textarea { resize: vertical; }
+.app-form .btn { margin-top: 14px; align-self: flex-start; }
+
+/* Smaller buttons and coloured action buttons */
+.btn-small { font-size: 13px; padding: 6px 12px; }
+.btn-success { background-color: #16a34a; }
+.btn-success:hover { background-color: #15803d; }
+.btn-danger { background-color: #dc2626; }
+.btn-danger:hover { background-color: #b91c1c; }
+
+/* The "← Back" button above the details title */
+.page-header .btn-small { margin-bottom: 12px; }
+
+/* Grey text row shown for "Loading…" and empty tables */
+.empty-cell {
+  color: var(--muted);
+  text-align: center;
+  padding: 20px;
+  white-space: normal;
+}
+
+/* Filters above the All Requests table */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.filters label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.filters select {
+  font-family: inherit;
+  font-size: 14px;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background-color: #ffffff;
+}
+
+/* Request details: two cards side by side, one column on phones */
+.details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* Label / value pairs */
+.info-list {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 10px 12px;
+  margin: 0;
+  font-size: 14px;
+}
+
+.info-list dt { color: var(--muted); }
+.info-list dd { margin: 0; overflow-wrap: anywhere; }
+
+/* One block per action in the Actions card */
+.action-block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-bottom: 14px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.action-block:last-child { border-bottom: none; margin-bottom: 0; }
+
+.action-block select,
+.action-block textarea {
+  font-family: inherit;
+  font-size: 14px;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.action-block .btn { align-self: flex-start; }
+.action-block label { font-size: 14px; font-weight: 600; }
+
+/* Comments and history lists */
+.comment-list,
+.history-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 12px 0;
+}
+
+.comment-list li,
+.history-list li {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+}
+
+.history-list li {
+  border-left: 3px solid var(--primary);
+  padding-left: 12px;
+  border-bottom: none;
+  margin-bottom: 8px;
+}
+
+.item-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.item-meta strong { color: var(--text); font-size: 13px; }
+.item-text { overflow-wrap: anywhere; white-space: pre-wrap; }
+
+/* Reports: simple bar charts made of plain divs */
+.reports-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.bar-row {
+  display: grid;
+  grid-template-columns: 110px 1fr 36px;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  font-size: 13px;
+}
+
+.bar-track {
+  background-color: #f3f4f6;
+  border-radius: 999px;
+  height: 10px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  background-color: var(--primary);
+  height: 100%;
+}
+
+.bar-count { text-align: right; font-weight: 600; }
+
+@media (max-width: 768px) {
+  .details-grid { grid-template-columns: 1fr; }
+  .info-list { grid-template-columns: 110px 1fr; }
+}
